@@ -17,8 +17,8 @@ module.exports = router => {
           if(res.length === 0) {
             request.body.userId = request.user._id;
             return new Activity(request.body).save()
-              .then(newLibrary => response.status(201).json(newLibrary))
-              .catch(err => errorHandler(err,response));
+            .catch(err => errorHandler(err,response));
+            .then(newLibrary => response.status(201).json(newLibrary))
           } 
         }).catch(err => errorHandler(err,response));
     })
