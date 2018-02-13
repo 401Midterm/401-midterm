@@ -11,12 +11,15 @@
     "start": "node index.js",
     "start:watch": "nodemon index.js",
     "start:debug": "DEBUG=http* nodemon index.js",
+    "start:debug-win": "set DEBUG=serve* & nodemon index.js",
     "test": "jest -i",
     "test:watch": "jest -i --watchAll",
     "test:debug": "DEBUG=http* jest -i",
+    "test:debug-win": "set DEBUG=serve* & jest -i",
     "lint": "eslint .",
     "lint:test": "npm run lint && npm test",
     "start-db": "mkdir -p ./data/db && mongod --dbpath ./data/db",
+    "start-db-win": "mkdir -p ./data/db & mongod --dbpath ./data/db",
     "stop-db": "killall mongod"
   },
   "jest": {
