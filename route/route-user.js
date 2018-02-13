@@ -59,4 +59,21 @@ module.exports = function(router) {
       })
       .catch(err => errorHandler(err,response));
   });
+  router.put('/users/:id', bearerAuth, bodyParser, (request, response) => {
+    return User.findById(request.params.id)
+      .then(user => {
+        console.log('request body',request.body.username);
+        console.log('user',user._id.toString());
+        console.log('user',request.user._id.toString());
+        if(user._id.toString() === request.user._id) {
+          user.username = request.body.username || user.username;
+          user.email = request.body.email || user.email;
+          console.log('user',user);
+          return user.save();
+        }
+      })
+      // }))
+      .then(user => response.status(204).json(user))
+      .catch(err => errorHandler(err,response));
+  });
 };
