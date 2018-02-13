@@ -7,7 +7,6 @@ const bodyParser = require('body-parser').json();
 const errorHandler = require('../lib/error-handler');
 const bearerAuth = require('../lib/bearer-auth');
 const ERROR_MESSAGE = 'Authorization Failed';
-const User = require('../model/user');
 
 module.exports = router => {
   router.route('/activity/:id?')
@@ -18,8 +17,8 @@ module.exports = router => {
           if(res.length === 0) {
             request.body.userId = request.user._id;
             return new Activity(request.body).save()
-            .catch(err => errorHandler(err,response));
-            .then(newLibrary => response.status(201).json(newLibrary))
+              .catch(err => errorHandler(err,response))
+              .then(newActivity => response.status(201).json(newActivity));
           } 
         }).catch(err => errorHandler(err,response));
     })
