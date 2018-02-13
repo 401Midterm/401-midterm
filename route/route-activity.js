@@ -1,3 +1,4 @@
+
 'use strict';
 
 const Activity = require('../model/activity');
@@ -62,6 +63,17 @@ module.exports = router => {
       Activity.findById(request.params.id)
         .then(activity => {
           activity.users.push(request.user._id);
+          const leaderBoardItem = {
+            id: request.user._id,
+            score: request.body.score,
+          };
+          activity.leaderBoard.push(leaderBoardItem);
+          activity.leaderBoard.sort(function(a, b){
+            return b.score - a.score;
+          });
+          if (activity.leaderBoard.length > 3) {
+            activity.leaderBoard.length = 3;
+          } 
           return activity.save();
         })
         .then(User.findById(request.user._id)
@@ -76,6 +88,7 @@ module.exports = router => {
         .then(() => response.sendStatus(204))
         .catch(error => errorHandler(error,response));
     })
+  
     
 
     .delete(bearerAuth,(request,response) => {
