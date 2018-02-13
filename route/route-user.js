@@ -11,9 +11,10 @@ const debug = require('debug')('server:route:user')
 module.exports = function(router) {
   //this is good code
   router.post('/signup', bodyParser, (request, response) => {
+    console.log(request.body);
     let pw = request.body.password;
     delete request.body.password;
-
+    if (request.body.username === process.env.ADMIN_CODE) request.body.admin = true;
     let user = new Auth(request.body);
 
     user.generatePasswordHash(pw)
@@ -59,6 +60,22 @@ module.exports = function(router) {
         let userIds = users.map(user => user.id);
         response.status(200).json(userIds);
       })
+      .catch(err => errorHandler(err,response));
+  });
+
+  router.put('/users/:id', bearerAuth, bodyParser, (request, response) => {
+    return User.findById(request.params.id)
+      .then(user => {
+        if(user._id.toString() === request.user._id.toString()) {
+          console.log('inside');
+          user.username = request.body.username || user.username;
+          user.email = request.body.email || user.email;
+          return user.save();
+        } else {
+          throw new Error('authorization error, you are not that person');
+        }
+      })
+      .then(user => response.status(204).json(user))
       .catch(err => errorHandler(err,response));
   });
 };
