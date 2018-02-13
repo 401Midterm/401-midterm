@@ -1,3 +1,4 @@
+
 'use strict';
 
 const Activity = require('../model/activity');
@@ -66,17 +67,13 @@ module.exports = router => {
             id: request.user._id,
             score: request.body.score,
           };
-          console.log(activity.leaderBoard);
-          if (activity.leaderBoard.length < 3) {
-            activity.leaderBoard.push(leaderBoardItem);
-          } else if (activity.leaderBoard[2].score < request.body.score && activity.leaderBoard[1] >= request.body.score) {
-            activity.leaderBoard[2] = leaderBoardItem;
-          } else if (activity.leaderBoard[1].score < request.body.score && activity.leaderBoard[0] >= request.body.score) {
-            activity.leaderBoard[2] = activity.leaderBoard[1];
-            activity.leaderBoard[1] = leaderBoardItem;
-          } else if (activity.leaderBoard[0].score < request.body.score) {
-            activity.leaderBoard.unshift(leaderBoardItem);
-          }
+          activity.leaderBoard.push(leaderBoardItem);
+          activity.leaderBoard.sort(function(a, b){
+            return b.score - a.score;
+          });
+          if (activity.leaderBoard.length > 3) {
+            activity.leaderBoard.length = 3;
+          } 
           return activity.save();
         })
         .then(User.findById(request.user._id)
