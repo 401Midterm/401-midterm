@@ -7,6 +7,7 @@ const errorHandler = require('../lib/error-handler');
 const bearerAuth = require('../lib/bearer-auth');
 const ERROR_MESSAGE = 'Authorization Failed';
 const User = require('../model/user');
+const adminAuth = require('../lib/admin-auth');
 
 module.exports = router => {
   router.route('/activity/:id?')
@@ -91,12 +92,11 @@ module.exports = router => {
   
     
 
-    .delete(bearerAuth,(request,response) => {
+    .delete(bearerAuth, adminAuth, (request,response) => {
       return Activity.findById(request.params.id)
         .then(activity => {
-          if(activity.userId.toString() === request.user.id.toString())
-            return activity.remove();
-          return errorHandler(new Error(ERROR_MESSAGE),response);
+          console.log(activity);
+          // return activity.remove();
         })
         .then(() => response.sendStatus(204))
         .catch(err => errorHandler(err,response));

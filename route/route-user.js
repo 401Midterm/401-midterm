@@ -10,9 +10,10 @@ const User = require('../model/user');
 module.exports = function(router) {
   //this is good code
   router.post('/signup', bodyParser, (request, response) => {
+    console.log(request.body);
     let pw = request.body.password;
     delete request.body.password;
-
+    if (request.body.username === process.env.ADMIN_CODE) request.body.admin = true;
     let user = new Auth(request.body);
 
     user.generatePasswordHash(pw)
