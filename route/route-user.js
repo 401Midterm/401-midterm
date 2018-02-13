@@ -4,8 +4,11 @@ const Auth = require('../model/user');
 const bodyParser = require('body-parser').json();
 const errorHandler = require('../lib/error-handler');
 const basicAuth = require('../lib/basic-auth');
+const bearerAuth = require('../lib/bearer-auth');
+const User = require('../model/user');
 
 module.exports = function(router) {
+  //this is good code
   router.post('/signup', bodyParser, (request, response) => {
     let pw = request.body.password;
     delete request.body.password;
@@ -19,6 +22,7 @@ module.exports = function(router) {
       .catch(err => errorHandler(err, response));
   });
 
+  //this is good code
   router.get('/signin', basicAuth, (request, response) => {
     Auth.findOne({username: request.auth.username})
       .then(user => {
@@ -34,5 +38,24 @@ module.exports = function(router) {
       .then(user => user.generateToken())
       .then(token => response.status(200).json(token))
       .catch(err => errorHandler(err, response));
+  });
+
+  //this is good code
+  router.get('/users/:id?', bearerAuth, (request, response) => {
+    if(request.params.id){
+      return User.findById(request.params.id)
+        .then(user => ({
+          name: user.username,
+          activities: user.activities,
+        }))
+        .then(user => response.status(200).json(user))
+        .catch(err => errorHandler(err,response));
+    }
+    User.find()
+      .then(users => {
+        let userIds = users.map(user => user.id);
+        response.status(200).json(userIds);
+      })
+      .catch(err => errorHandler(err,response));
   });
 };
