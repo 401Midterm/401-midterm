@@ -2,11 +2,12 @@
 'use strict';
 
 const Activity = require('../model/activity');
+const User = require('../model/user');
 const bodyParser = require('body-parser').json();
 const errorHandler = require('../lib/error-handler');
 const bearerAuth = require('../lib/bearer-auth');
-const User = require('../model/user');
 const adminAuth = require('../lib/admin-auth');
+
 
 module.exports = router => {
   router.route('/activity/:id?')
@@ -47,8 +48,8 @@ module.exports = router => {
         .then(res => {
           if(res.length === 0) {
             request.body.userId = request.user._id;
-            return new Activity(request.body).save()
-              .then(newLibrary => response.status(201).json(newLibrary))
+            return new Activity(request.body).save()            
+              .then(newActivity => response.status(201).json(newActivity))
               .catch(err => errorHandler(err,response));
           } else {
             throw new Error('already made');
