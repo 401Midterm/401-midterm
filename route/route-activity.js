@@ -1,6 +1,7 @@
 'use strict';
 
 const Activity = require('../model/activity');
+const User = require('../model/user');
 const bodyParser = require('body-parser').json();
 const errorHandler = require('../lib/error-handler');
 const bearerAuthMiddleware = require('../lib/bearer-auth');
@@ -8,14 +9,31 @@ const ERROR_MESSAGE = 'Authorization Failed';
 
 module.exports = router => {
   router.route('/activity/:id?')
+    // .post(bearerAuthMiddleware,bodyParser,(request,response) => {
+    //   console.log(Activity.find({name: request.body.name, location:request.body.location}));
+    //   if (Activity.find({name: request.body.name, location:request.body.location})) {
+    //     errorHandler(new Error('already made'), response);
+    //   }
+    //   request.body.userId = request.user._id;
+    //   return new Activity(request.body).save()
+    //     .then(newActivity => response.status(201).json(newActivity))
+    //     .catch(err => errorHandler(err,response));
+    // })
     .post(bearerAuthMiddleware,bodyParser,(request,response) => {
-      console.log(Activity.find({name: request.body.name, location:request.body.location}));
-      if (Activity.find({name: request.body.name, location:request.body.location})) {
-        errorHandler(new Error('already made'), response);
-      }
-      request.body.userId = request.user._id;
-      return new Activity(request.body).save()
-        .then(newLibrary => response.status(201).json(newLibrary))
+      Activity.find(request.body.userId = request.user._id)
+        .then(activity => {
+          if(activity.userId === request.user._id) {
+            activity.name != request.body.name || activity.name;
+            activity.location != request.body.location || activity.location;
+            return activity.save();
+          }
+          if (request.body.name === undefined || request.body.location === undefined || activity.name === request.body.name || activity.name && activity.location === request.body.location && activity.location) {
+            throw new Error('validation');
+          }
+        })
+          
+        // return new Activity(request.body).save()
+        .then(newActivity => response.status(201).json(newActivity))
         .catch(err => errorHandler(err,response));
     })
     
@@ -37,7 +55,7 @@ module.exports = router => {
         .then(activity => {
           if(activity.userId === request.user._id) {
             activity.name = request.body.name || activity.name;
-            activity.description = request.body.description || activity.description;
+            activity.location = request.body.location || activity.location;
             return activity.save();
           }
           if (request.body.name === undefined || request.body.description === undefined ) {
