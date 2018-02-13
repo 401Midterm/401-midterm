@@ -6,6 +6,7 @@ const errorHandler = require('../lib/error-handler');
 const basicAuth = require('../lib/basic-auth');
 const bearerAuth = require('../lib/bearer-auth');
 const User = require('../model/user');
+const debug = require('debug')('server:route:user')
 
 module.exports = function(router) {
   //this is good code
@@ -24,6 +25,7 @@ module.exports = function(router) {
 
   //this is good code
   router.get('/signin', basicAuth, (request, response) => {
+    debug(`/signin`);
     Auth.findOne({username: request.auth.username})
       .then(user => {
         return user
@@ -42,6 +44,7 @@ module.exports = function(router) {
 
   //this is good code
   router.get('/users/:id?', bearerAuth, (request, response) => {
+    debug(`/users/${request.params.id}`);
     if(request.params.id){
       return User.findById(request.params.id)
         .then(user => ({
