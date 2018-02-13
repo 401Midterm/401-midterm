@@ -88,22 +88,22 @@ describe('GET /api/v1/users/:id?', function() {
   describe('Valid Requests', () => {
     it('should return a 200 status code and a body of an Array', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/users`)
-        .set('Authorization', `Bearer ${mock.token}`);
-      })
-      .then(response => {
+        .then(mock => {
+          return superagent.get(`:${process.env.PORT}/api/v1/users`)
+            .set('Authorization', `Bearer ${mock.token}`);
+        })
+        .then(response => {
           expect(response.status).toEqual(200);
           expect(response.body).toBeInstanceOf(Array);
         });
-      });
+    });
     it('should return 200 status with body {activities: [], name: ""}', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}`)
-        .set('Authorization', `Bearer ${mock.token}`);
-      })
-      .then(response => {
+        .then(mock => {
+          return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}`)
+            .set('Authorization', `Bearer ${mock.token}`);
+        })
+        .then(response => {
           expect(response.status).toEqual(200);
           expect(response.body).toBeInstanceOf(Object);
           expect(response.body).toHaveProperty('activities');
@@ -115,47 +115,47 @@ describe('GET /api/v1/users/:id?', function() {
   describe('Invalid Requests', () => {
     it('should return 401 for no token', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/users`)
-          .set('Authorization', `Bearer of bad news`);
-      })
-      .catch(error => {
-        expect(error.status).toEqual(401);
-        expect(error).toBeInstanceOf(Error);
-      });
+        .then(() => {
+          return superagent.get(`:${process.env.PORT}/api/v1/users`)
+            .set('Authorization', `Bearer of bad news`);
+        })
+        .catch(error => {
+          expect(error.status).toEqual(401);
+          expect(error).toBeInstanceOf(Error);
+        });
     });
     it('should return 404 for bad path', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/user`)
-          .set('Authorization', `Bearer ${mock.token}`);
-      })
-      .catch(error => {
-        expect(error.status).toEqual(404);
-        expect(error).toBeInstanceOf(Error);
-      });
+        .then(mock => {
+          return superagent.get(`:${process.env.PORT}/api/v1/user`)
+            .set('Authorization', `Bearer ${mock.token}`);
+        })
+        .catch(error => {
+          expect(error.status).toEqual(404);
+          expect(error).toBeInstanceOf(Error);
+        });
     });
     it('should return 401 for no token', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}`)
-        .set('Authorization', `Bearer of bad news`);
-      })
-      .catch(error => {
-        expect(error.status).toEqual(401);
-        expect(error).toBeInstanceOf(Error);
-      });
+        .then(mock => {
+          return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}`)
+            .set('Authorization', `Bearer of bad news`);
+        })
+        .catch(error => {
+          expect(error.status).toEqual(401);
+          expect(error).toBeInstanceOf(Error);
+        });
     });
     it('should return 404 for bad path', () => {
       return mock.user.createOne()
-      .then(mock => {
-        return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}badpath`)
-        .set('Authorization', `Bearer ${mock.token}`);
-      })
-      .catch(error => {
-        expect(error.status).toEqual(404);
-        expect(error).toBeInstanceOf(Error);
-      });
+        .then(mock => {
+          return superagent.get(`:${process.env.PORT}/api/v1/users/${mock.user._id}badpath`)
+            .set('Authorization', `Bearer ${mock.token}`);
+        })
+        .catch(error => {
+          expect(error.status).toEqual(404);
+          expect(error).toBeInstanceOf(Error);
+        });
     });
   });
 });
