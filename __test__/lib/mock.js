@@ -2,9 +2,11 @@
 
 const User = require('../../model/user');
 const faker = require('faker');
+const Activity = require('../../model/activity');
 
 const mock = module.exports = {};
 mock.user = {};
+mock.activity = {};
 
 mock.user.createOne = () => {
   let resultUser = {};
@@ -22,6 +24,27 @@ mock.user.createOne = () => {
     .then(token => resultUser.token = token)
     .then(() => {
       return resultUser;
+    });
+};
+mock.user.removeAll = () => Promise.all([User.remove()]);
+
+
+
+mock.activity.createOne = () => {
+  let resultMock = null;
+
+  return mock.user.createOne()
+    .then(createdUserMock => resultMock = createdUserMock)
+    .then(() => {
+      return new Activity({
+        name: faker.name.firstName(),
+        location: faker.name.firstName(),
+        display: 'true',
+      }).save();
+    })
+    .then(activity => {
+      resultMock.activity = activity;
+      return resultMock;
     });
 };
 mock.user.removeAll = () => Promise.all([User.remove()]);
