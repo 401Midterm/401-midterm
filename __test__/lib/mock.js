@@ -38,10 +38,12 @@ mock.activity.createOne = () => {
   return mock.user.createOne()
     .then(createdUserMock => resultMock = createdUserMock)
     .then(() => {
+      // console.log('############', resultMock);
       return new Activity({
         name: faker.name.firstName(),
         location: faker.name.firstName(),
         display: 'true',
+        leaderBoard: [{_id: resultMock.user._id, score: faker.random.number()}],
       }).save();
     })
     .then(activity => {

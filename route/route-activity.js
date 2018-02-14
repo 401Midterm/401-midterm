@@ -102,9 +102,10 @@ module.exports = router => {
     .get(bearerAuth,(request,response) => {
       return Activity.find({_id: request.params.id, display: 'true'})
         .then(activity => {
-          if(activity.length === 0) {
-            throw new Error('objectid failed');
-          }
+          console.log('$$$$$$$$$$$',activity);
+          // if(activity.length === 0) {
+          //   throw new Error('objectid failed');
+          // } //will come back to this. not sure if we need it
           return activity[0].leaderBoard;
         })
         .then(leaderboard => response.status(200).json(leaderboard))

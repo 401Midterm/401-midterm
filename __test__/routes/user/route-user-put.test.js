@@ -89,7 +89,7 @@ describe('PUT /api/v1/users/:id?', function() {
           .then(response => this.response = response)
           .catch(console.log);
       });
-      let mockUser2 = null;
+      // let mockUser2 = null;
       return mock.user.createOne()
         .then(mock => {
           this.mockUser= mock;
