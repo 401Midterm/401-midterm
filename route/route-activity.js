@@ -17,8 +17,8 @@ module.exports = router => {
       debug(`POST /activity/${request.params.id || ''}`);
       if(request.params.id) {
         return Activity.findById(request.params.id)
-        .then(activity => {
-          debug(`\tupdating activity`);
+          .then(activity => {
+            debug(`\tupdating activity`);
             if (request.body.score === undefined) {
               throw new Error('validation');
             }
@@ -55,19 +55,20 @@ module.exports = router => {
             debug(`\tfailed post`);
             return errorHandler(error,response);
           });
+        
       }
       Activity.find({name: request.body.name, location: request.body.location})
         .then(res => {
           debug(`\tcreating activity`);
           if(res.length === 0) {
             request.body.userId = request.user._id;
-            debug(`\tsaving`)
+            debug(`\tsaving`);
             return new Activity(request.body).save()
               .then(newActivity =>
-                {
-                  debug(`\tsuccesfully posted`);
-                  response.status(201).json(newActivity)
-                })
+              {
+                debug(`\tsuccesfully posted`);
+                response.status(201).json(newActivity);
+              })
               .catch(err => errorHandler(err,response));
           } else {
             throw new Error('already made');
@@ -96,14 +97,15 @@ module.exports = router => {
         .then(activites => {
           let activitesIds = activites.map(activity => activity.id);
           debug(`\tfound all visible activities: ${activitesIds}`);
-          response.status(200).json(activitesIds);
-        .catch(err => {
-          debug(`\tfailed to find all`);
-          return errorHandler(err,response);
+          response.status(200).json(activitesIds)
+            .catch(err => {
+              debug(`\tfailed to find all`);
+              return errorHandler(err,response);
+            });
         });
     })
 
-    // working code and only for ADMIN
+  // working code and only for ADMIN
     .put(bearerAuth, bodyParser, adminAuth, (request,response) => {
       debug(`PUT /activity/${request.params.id || ''}`);
       Activity.findById(request.params.id)
@@ -125,7 +127,7 @@ module.exports = router => {
     })
 
 
-    //works and only for admin
+  //works and only for admin
     .delete(bearerAuth, adminAuth, (request,response) => {
       debug(`DELETE /activity/${request.params.id || ''}`);
       return Activity.findById(request.params.id)
@@ -135,13 +137,14 @@ module.exports = router => {
         })
         .then(() => {
           debug(`\tsuccessfully deleted`);
-          response.sendStatus(204)
+          response.sendStatus(204);
         })
         .catch(err => {
           debug(`\tfailed delete`);
           return errorHandler(err,response);
         });
     });
+
 
   //this is good code
   //new route for leadboard
@@ -157,11 +160,12 @@ module.exports = router => {
         })
         .then(leaderboard => {
           debug(`\tsuccesfully found single leaderboard: ${leaderboard}`);
-          response.status(200).json(leaderboard)
+          response.status(200).json(leaderboard);
         })
         .catch(err => {
           debug(`\tfailed`);
           return errorHandler(err,response);
         });
     });
+
 };
