@@ -45,6 +45,11 @@ describe('GET overall!!!!', function() {
           .set('Authorization', `Bearer ${mockActivity.token}`)
           .catch(err => expect(err.status).toEqual(404));
       });
+      it('should return a 404 bad path', () => {
+        return superagent.post(`:${process.env.PORT}/api/v1/activi`)
+          .set('Authorization', `Bearer ${mockActivity.token}`)
+          .catch(err => expect(err.status).toEqual(404));
+      });
     });
   });
 

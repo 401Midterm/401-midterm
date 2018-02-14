@@ -71,7 +71,14 @@ describe('POST overall!!!!', function() {
           .send({
             score: faker.random.number(),
           })
-          .then(res => testRes2 = res);
+          .then(res => testRes2 = res)
+          .then(() => {
+            return superagent.post(`:${process.env.PORT}/api/v1/activity/${testRes.body._id}`)
+              .set('Authorization', `Bearer ${mockUser.token}`)
+              .send({
+                score: faker.random.number(),
+              });
+          });
       });
       it('should return a valid 201 CREATED status code', () => {
         expect(testRes2.status).toEqual(201);
