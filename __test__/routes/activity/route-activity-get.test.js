@@ -10,6 +10,7 @@ describe('GET overall!!!!', function() {
   beforeAll(server.start);
   afterAll(server.stop);
   afterAll(mock.user.removeAll);
+  afterAll(mock.activity.removeAll);
   var testRes;
   var testRes2;
   var mockActivity;

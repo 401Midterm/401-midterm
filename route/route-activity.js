@@ -110,14 +110,4 @@ module.exports = router => {
         .then(leaderboard => response.status(200).json(leaderboard))
         .catch(err => errorHandler(err,response));
     });
-
-  router.route('/activity/admin')
-    .get(bearerAuth, adminAuth, (request,response) => {
-      return Activity.find({display: 'false'})
-        .then(activites => {
-          let activitesIds = activites.map(activity => activity.id);
-          response.status(200).json(activitesIds);
-        })
-        .catch(err => errorHandler(err,response));
-    });
 };
