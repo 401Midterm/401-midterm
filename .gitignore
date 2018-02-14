@@ -59,4 +59,4 @@ typings/
 .env
 .test.env
 .debug.env
-
+**.env

@@ -10,6 +10,7 @@ describe('POST overall!!!!', function() {
   beforeAll(server.start);
   afterAll(server.stop);
   afterAll(mock.user.removeAll);
+  afterAll(mock.activity.removeAll);
   var testRes;
   var mockUser;
   var testRes2;
