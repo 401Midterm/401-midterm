@@ -33,6 +33,7 @@ module.exports = router => {
             } 
             return activity.save();
           })
+          
           .then(User.findById(request.user._id)
             .then(user => {
               user.activities.push(({
@@ -69,7 +70,7 @@ module.exports = router => {
           let activitesIds = activites.map(activity => activity.id);
           response.status(200).json(activitesIds);
         })
-        .catch(err => errorHandler(err,response));
+        .catch(err => errorHandler(err,response)); //this line is not testable.
     })
 
     // working code and only for ADMIN
@@ -102,9 +103,9 @@ module.exports = router => {
     .get(bearerAuth,(request,response) => {
       return Activity.find({_id: request.params.id, display: 'true'})
         .then(activity => {
-          if(activity.length === 0) {
-            throw new Error('objectid failed');
-          }
+          // if(activity.length === 0) {
+          //   throw new Error('objectid failed');
+          // } //will come back to this. not sure if we need it
           return activity[0].leaderBoard;
         })
         .then(leaderboard => response.status(200).json(leaderboard))
