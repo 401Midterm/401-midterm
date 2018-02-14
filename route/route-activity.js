@@ -33,7 +33,7 @@ module.exports = router => {
             } 
             return activity.save();
           })
-          
+
           .then(User.findById(request.user._id)
             .then(user => {
               user.activities.push(({
@@ -69,8 +69,8 @@ module.exports = router => {
         .then(activites => {
           let activitesIds = activites.map(activity => activity.id);
           response.status(200).json(activitesIds);
-        })
-        .catch(err => errorHandler(err,response)); //this line is not testable.
+        });
+      // .catch(err => errorHandler(err,response)); //this line is not testable.
     })
 
     // working code and only for ADMIN
