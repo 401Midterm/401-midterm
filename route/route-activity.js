@@ -14,11 +14,11 @@ module.exports = router => {
   //good code and working on both.
     .post(bearerAuth,bodyParser,(request,response) => {
       if(request.params.id) {
-        if (request.body.score === undefined) {
-          throw new Error('validation');
-        }
         return Activity.findById(request.params.id)
           .then(activity => {
+            if (request.body.score === undefined) {
+              throw new Error('validation');
+            }
             activity.users.push(request.user._id);
             const leaderBoardItem = {
               id: request.user._id,
