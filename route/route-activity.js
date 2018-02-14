@@ -37,6 +37,7 @@ module.exports = router => {
             debug(`\tsaving leaderboard: ${JSON.stringify(activity.leaderBoard)}`);
             return activity.save();
           })
+
           .then(User.findById(request.user._id)
             .then(user => {
               user.activities.push(({
@@ -96,7 +97,6 @@ module.exports = router => {
           let activitesIds = activites.map(activity => activity.id);
           debug(`\tfound all visible activities: ${activitesIds}`);
           response.status(200).json(activitesIds);
-        })
         .catch(err => {
           debug(`\tfailed to find all`);
           return errorHandler(err,response);
@@ -150,9 +150,9 @@ module.exports = router => {
       debug(`GET /activity/${request.params.id}/leaderboard`);
       return Activity.find({_id: request.params.id, display: 'true'})
         .then(activity => {
-          if(activity.length === 0) {
-            throw new Error('objectid failed');
-          }
+          // if(activity.length === 0) {
+          //   throw new Error('objectid failed');
+          // } //will come back to this. not sure if we need it
           return activity[0].leaderBoard;
         })
         .then(leaderboard => {

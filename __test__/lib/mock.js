@@ -8,6 +8,7 @@ const mock = module.exports = {};
 
 mock.user = {};
 mock.activity = {};
+mock.activityHidden = {};
 mock.admin = {};
 
 mock.user.createOne = () => {
@@ -38,10 +39,12 @@ mock.activity.createOne = () => {
   return mock.user.createOne()
     .then(createdUserMock => resultMock = createdUserMock)
     .then(() => {
+      // console.log('############', resultMock);
       return new Activity({
         name: faker.name.firstName(),
         location: faker.name.firstName(),
         display: 'true',
+        leaderBoard: [{_id: resultMock.user._id, score: faker.random.number()}],
       }).save();
     })
     .then(activity => {
@@ -49,7 +52,32 @@ mock.activity.createOne = () => {
       return resultMock;
     });
 };
-mock.user.removeAll = () => Promise.all([User.remove()]);
+mock.activity.removeAll = () => Promise.all([Activity.remove()]);
+
+
+
+mock.activityHidden.createOne = () => {
+  let resultMock = null;
+
+  return mock.user.createOne()
+    .then(createdUserMock => resultMock = createdUserMock)
+    .then(() => {
+      // console.log('############', resultMock);
+      return new Activity({
+        name: faker.name.firstName(),
+        location: faker.name.firstName(),
+        display: 'false',
+        leaderBoard: [{_id: resultMock.user._id, score: faker.random.number()}],
+      }).save();
+    })
+    .then(activity => {
+      resultMock.activity = activity;
+      return resultMock;
+    });
+};
+mock.activityHidden.removeAll = () => Promise.all([Activity.remove()]);
+
+
 
 
 mock.admin.createOne = () => {
