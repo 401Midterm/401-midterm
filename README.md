@@ -4,7 +4,7 @@
 
 ##  **About this App.**
 
-This app is a basic leader board for different acticities. We let you build a user account that you can add different types of activities to your account and when you do that, you add your personal best score to that event. We keep track of the top 3 best scores for anyone to see. 
+This app is a basic leader board for different acticities. We let you build a user account that you can add different types of activities to your account and when you do that, you add your personal best score to that event. We keep track of the top 3 best scores for anyone to see.
 
 ### **Installing and How to use.**
 
@@ -36,7 +36,7 @@ next you need to have these scripts adjusted in your package.json file.
 
 ### starting your server and dataBase
 
-from there, you can go to your terminal and type, 
+from there, you can go to your terminal and type,
 
 ```javascript
 node run start
@@ -52,7 +52,7 @@ node run start-db
 
 ## **Commands to sign up.**
 
-to sign up for our App, you need to enter in the following code with your own `username`, `email` and `password`. 
+to sign up for our App, you need to enter in the following code with your own `username`, `email` and `password`.
 
 
 to sign up to the database
@@ -61,7 +61,7 @@ http POST https://competeme-deploy.herokuapp.com/api/v1/signup username=Tim pass
 ```
 once you have submitted this code, you will get a token back that you will use to then create activities.
 
-this token should look like this. make sure to hold on to this and keep it for different commands. 
+this token should look like this. make sure to hold on to this and keep it for different commands.
 
 ```javascript
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU2Mjg1YzIyZTg5MDA2YjM2ODEzMmI4MjI2YWNlNzczNmI0OTNkMjY1MTZlNmZiMTFlOWZhZTk2NDQ0ZTJkNDAiLCJpYXQiOjE1MTg2NDU5MjJ9.PS6BRlF49BebHGM-TiQ_gGczBbf-Ziq3DFTTtDfqRpY"
@@ -90,7 +90,7 @@ http PUT https://competeme-deploy.herokuapp.com/api/v1/users/5a84b2a2fc36b300149
 ```
 you will also need to have your token to do so. only your token will let you update your data. it should look like this.
 ```javascript
-'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk' 
+'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
 ```
 you will not get a response back but it will update your info and give you a 204 status code.
 
@@ -212,7 +212,7 @@ this should return an a single user with all the info about that user like name,
 }
 ```
 
-###  **Looking up an leaderBoard**
+###  **Looking up a leaderBoard**
 
 if you wish to look up the leaderboard for a given activity, type in the code below.
 
@@ -241,29 +241,20 @@ you will be given the top 3 in that said activity. it should look like this.
 
 ## **ADMIN POWER**
 
-part of this App is that we created a Admin power so they can update any activity and delete any activity as well. Part of there power is that when a new activity is made by a user, it goes into a admin queue that is waiting for them to then approve it. at that time, all users will be able to see the approved activity.
+The admin is a special user with an `admin` property set to `true`. Currently, only one user, whose name upon creation matches a secret name in the environment variables, can be admin.
 
+### **Admin: View Hidden Activities**
 
-### **update an activity/approving activity**
+When a user creates an acitivity, it is hidden by default. An admin must approve each hidden activity.
 
-if you want to update an activity so the name and location are correct, this is where you do this. ALSO, when you want to make this activity public and approved, this is where you do that also.
+To GET all hidden activities (admin required):
 
-below is the code that you will use to update an activity with updated info OR approve it once you think its ready for public use. in the example below, we are setting the display to true.
-
-```javascript
-http PUT https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b141fc36b3001492df29 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM' display=true
-```
-this command will return no content.
-
-## **Admin queue look up**
-
-when a use creates an acitivity, it is set to be hidden be default. it take a Admin to then go in and approve it. They will do that will a update call that is talked about above. to get your Admin Queue, they will type in the following code. 
-
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/admin 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM'
+```sh
+http GET https://competeme-deploy.herokuapp.com/api/v1/admin 'Authorization:Bearer <admin token>'
 ```
 
-this will return an array of ativities for them to approve or an empty array if there is nothing to approve. example code below.
+A GET call (as admin) returns an array of activities pending approval (or an empty array if there are no activities to approve).
+(example):
 
 ```javascript
 [
@@ -272,20 +263,30 @@ this will return an array of ativities for them to approve or an empty array if 
 ]
 ```
 
-## **Admin Delete for activity**
+### **Admin: Update Activity**
 
-if you wish to delete an activity, you can do so with the admin power with this command below.
+To PUT (update) an activity (admin required):
 
-```javascript
-http DELETE https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b527fc36b3001492df2c 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM'
+```sh
+http PUT https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>' [name=<string>] [location=<string>] [display=<true or false>]
 ```
 
-this will return no content but you will get a 204 status code to let you know it was succesful.
+A PUT call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
+
+### **Admin: Delete Activity**
+
+To DELETE an activity (admin required):
+
+```shell
+http DELETE https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>'
+```
+
+A DELETE call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
 
 
-### Testing
+## Testing
 
-We have completed testing for all functions and branches with the following coverage.
+Tests pass with >80% coverage of statements, branches, function and lines. Most uncovered lines are promise `catch()` functions, that will onnly be triggered if an error occurs in an outside API, (such as MongoDB).
 
 ```javascript
 --------------------|----------|----------|----------|----------|----------------|
@@ -312,4 +313,104 @@ Snapshots:   0 total
 Time:        6.713s, estimated 7s
 ```
 
+### Data Structures
 
+## **user**
+
+the user model is stuctured like this:
+
+```html
+user
++--"_id" <unique $oid generated by mongo upon creation>
+|
++--"username" <string, unique to this user, input by user>
++--"password" <string, hashed password, input by user>
+|
++--"admin" <boolean, gives admin authentication, only one user, undefined on other users>
+|
++--"activities" <array of objects>
+    |
+    +--<object>
+    |   +--"id" <matches many-to-one with an activity model "_id" property>
+    |   +--"score" <personal best score in a given activity>
+    |
+    +--<object>
+    |   +--"id"
+    |   +--"score"
+    |
+    +--(...)
+```
+
+## **activity**
+
+the activity model is stuctured like this:
+
+```html
+activity
+|
++--"_id" <unique $oid generated by mongo upon creation>
+|
++--"name" <string, name of activity, input by a user upon creation, unique relative to location>
++--"location" <string, location name, input by a user upon creation, unique relative to location>
+|
++--"leaderBoard" <array of top three high scores>
+|   |
+|   +--<object>
+|   |   +--"id" <matches many-to-one with a user model "_id" property>
+|   |   +--"score" <matches one-to-one with a user's "">
+|   |
+|   +--<object>
+|   |   +--"id"
+|   |   +--"score"
+|   |
+|   +--<object>
+|       +--"id"
+|       +--"score"
+|
++--"users" <array of "_id"s>
+    |
+    +--<many-to-one id>
+    +--<many-to-one id>
+    +--(...)
+```
+
+## **MANY to MANY**
+
+this is a many to many data structure. the schemas in the api are related like so:
+
+```
+user:                                   activity:
++--------------+______<ref__       ref>   +----------------+
+|         ._id  __________  |    \\\\\\\\\  ._id           |
+|    .password |          | |    \\       | .name          |
+|    .username |          | |    \\       | .location      |
+|       .admin |          | |    \\       | .leaderBoard:  |
+| .activities: |          | |    \\      +-------------+   |
+| +-------------+         | |    \\      | 0:          |   |
+| |             |         | |____\\_____+--------+     |   |
+| |          0: |         |  ____\\_____  .id    |     |   |
+| |      +--------+       | |    \\     | .score |     |   |
+| |      |    .id  \\\\\\\\\\\\\\\\     +--------+     |   |
+| |      | .score |       | |            | 1:          |   |
+| |      +--------+       | |           +--------+     |   |
+| |          1: |         | |           | .id    |     |   |
+| |      +--------+       | |           | .score |     |   |
+| |      |    .id |       | |           +--------+     |   |
+| |      | .score |       | |            | 2:          |   |
+| |      +--------+       | |           +--------+     |   |
+| |             |         | |           | .id    |     |   |
+| +-------------+         | |           | .score |     |   |
+|              |          | |           +--------+     |   |
++--------------+          | |            |             |   |
+                          | |            +-------------+   |
+                          | |             | .users:        |
+                          | |            +-------------+   |
+                          | |_____<ref___| 0: id       |   |
+                          |______________  1: id       |   |
+                                         | 2: id       |   |
+                                         | 3: id       |   |
+                                         | 4: id       |   |
+                                         +-------------+   |
+                                          |                |
+                                          +----------------+
+```
