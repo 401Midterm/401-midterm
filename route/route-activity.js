@@ -167,5 +167,4 @@ module.exports = router => {
           return errorHandler(err,response);
         });
     });
-
 };
