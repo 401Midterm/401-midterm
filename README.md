@@ -2,19 +2,26 @@
 
 [![Build Status](https://travis-ci.org/401Midterm/CompeteMe.svg?branch=master)](https://travis-ci.org/401Midterm/CompeteMe)
 
-##  **About this App.**
+##  **About This App**
 
-This app is a basic leader board for different acticities. We let you build a user account that you can add different types of activities to your account and when you do that, you add your personal best score to that event. We keep track of the top 3 best scores for anyone to see.
+This application is designed to allow users to form their own communities based on where they live. A user can sign up for a new account and post an activity that they would like their community to engage in, which then allows other users to view and interact with it. The activities are given a leaderboard for each location, so the community can see the fastest/highest scores for this event in their area.
 
-### **Installing and How to use.**
+### **Installing and How to Use**
 
-To install this program, place fork and 'git clone' this repo to your computer. From the terminal, navigate to the branch that you set it as. once there, install NPM but typing in , `nmp install` and httpie(done with homeBrew) after that you will need to install all the dependencies. to do that, juse type in `npm i`. You also need to have HTTPIE installed via homebrew `brew install httpie` in the terminal. this will let you do the helpful commands inside of the terminal.
+To install this program as a developer, fork and clone this repo to your computer. 
+Then from the terminal, install npm and httpie:
+```sh
+$ npm install npm@latest -g
+$ brew install httpie
+```
 
+Once those have completed install package dependencies by typing.
+```sh
+$ npm install
+```
 
-
-next you need to have these scripts adjusted in your package.json file.
-
-```javascript
+Next include these scripts in your package.json file.
+```js
  "scripts": {
     "start": "node index.js",
     "start:watch": "nodemon index.js",
@@ -32,196 +39,203 @@ next you need to have these scripts adjusted in your package.json file.
   },
   ```
 
-## **Getting started.**
-
-### starting your server and dataBase
-
-from there, you can go to your terminal and type,
-
-```javascript
-node run start
-```
-and this will start up your server
-
-
-you will also need to start up your mongoDB dataBase with the code below on a diffferent termail
-
-```javascript
-node run start-db
+Next include these variables in your .env file:
+```js
+PORT=4000
+MONGODB_URI='mongodb://localhost/competeMe'
+APP_SECRET='<secret>'
+ADMIN_CODE='<admin code>'
 ```
 
-## **Commands to sign up.**
 
-to sign up for our App, you need to enter in the following code with your own `username`, `email` and `password`.
+## **Getting Started**
 
+### **Starting Server and Database**
 
-to sign up to the database
-```javascript
-http POST https://competeme-deploy.herokuapp.com/api/v1/signup username=Tim password=123 email=Tim@gmail.com
-```
-once you have submitted this code, you will get a token back that you will use to then create activities.
-
-this token should look like this. make sure to hold on to this and keep it for different commands.
-
-```javascript
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU2Mjg1YzIyZTg5MDA2YjM2ODEzMmI4MjI2YWNlNzczNmI0OTNkMjY1MTZlNmZiMTFlOWZhZTk2NDQ0ZTJkNDAiLCJpYXQiOjE1MTg2NDU5MjJ9.PS6BRlF49BebHGM-TiQ_gGczBbf-Ziq3DFTTtDfqRpY"
-
+Run the server start command in the terminal:
+```sh
+$ node run start
 ```
 
-### **sign in to our database.**
-
-if you lost your Token, you can simple just sign back into out app by typing in the following command
-
-```javascript
-http -a Tim:123 GET https://competeme-deploy.herokuapp.com/api/v1/signin
+The terminal should output:
+```sh
+> Server running on <PORT>
 ```
 
-when the code above is submitted, you should have a new token that looks like this.
-```javascript
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk"
+Run the mongoDB database start commmand another terminal window:
+```sh
+$ node run start-db
 ```
 
-### **update your user info.**
+## **User Commands**
 
-if you want to change or update your `username` or `email` you can do that but you will need to have your token along with the updated info. example code below of what your submit should look like.
+### **Sign Up**
 
-```javascript
-http PUT https://competeme-deploy.herokuapp.com/api/v1/users/5a84b2a2fc36b3001492df2b username=Heath
+To sign up, enter the following command, with required parameters `username`, `email`, and `password`:
+```sh
+$ http POST https://competeme-deploy.herokuapp.com/api/v1/signup username=<username> password=<password> email=<email address>
 ```
-you will also need to have your token to do so. only your token will let you update your data. it should look like this.
-```javascript
-'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
+
+If all the parameters are valid, the server will return a `token` and a `201` status code. This `token` is necessary to access all other functionality in the app.
+
+The `token` should look something like this (example):
+```sh
+> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU2Mjg1YzIyZTg5MDA2YjM2ODEzMmI4MjI2YWNlNzczNmI0OTNkMjY1MTZlNmZiMTFlOWZhZTk2NDQ0ZTJkNDAiLCJpYXQiOjE1MTg2NDU5MjJ9.PS6BRlF49BebHGM-TiQ_gGczBbf-Ziq3DFTTtDfqRpY
 ```
-you will not get a response back but it will update your info and give you a 204 status code.
 
-###  **Adding a new activity**
+### **Sign In**
 
-to add a activity, you need to have a few different things to do so. 1st, you need to have your token. this lets you have access to our app. with out it, you will not be allowed to enter. 2nd, you need to have a name and a location of this activity. something like `5k` and `seattle`.  Below is a example of what the code should look like when you enter it into the terminal.
+If the `token` is lost, it can be retrieved by signing in with the same `username` and `password` used to signup. Use `-a` followed by the `<username>:<password>` to set the authorization header:
 
-```javascript
-http POST https://competeme-deploy.herokuapp.com/api/v1/activity 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk' name=Bench_Press location=Seattle
+```sh
+$ http -a <password>:<username> GET https://competeme-deploy.herokuapp.com/api/v1/signin
 ```
-once you have enter the code, you should get something like this below.
-```javascript
+
+If the user exists and the authorization is valid, the server will return the user's `token` with a `200` status code.
+
+### **Update User Info**
+
+To change or update `username` or `email`, enter the following command, making sure to include a valid `token`:
+
+```sh
+$ http PUT https://competeme-deploy.herokuapp.com/api/v1/users/5a84b2a2fc36b3001492df2b [username=<username>] [email=<email>] 'Authorization:Bearer <token>'
+```
+
+The server will return a `204` status code if the update was successful.
+
+###  **Create New Activity**
+
+To create a new activity, provide a `name` and a `location` of the activity. The `name` should describe the challenge or event: e.g. `5k`. The location should describe the scope of the new activity `Seattle`.
+
+Enter the following command to create a new event:
+```sh
+$ http POST https://competeme-deploy.herokuapp.com/api/v1/activity 'Authorization:Bearer <token>' name=<name> location=<location>
+```
+
+The server will respond with a `201` status code and a JSON object with the new activity, (example):
+```js
 {
    "__v": 0,
    "_id": "5a84b527fc36b3001492df2c",
    "display": "false",
    "leaderBoard": [],
    "location": "Seattle",
-   "name": "Bench_Press",
+   "name": "5k",
    "users": []
 }
 ```
-###  **Adding a score to an activity**
 
-once you have added an activity, you can then added your score to it. it should look like this.
+Note that `"display"` is set to `"false"` by default. All newly created activities must be approved by an admin, (see _Admin Powers_ below).
 
-```javascript
-http POST https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b141fc36b3001492df29 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM' score=50
+###  **Add a Score for an Activity**
+
+Once an activity is created and approved, any user can add their personal score in that activity. It is necessary to  include activity's `_id` in the url.
+
+To add a score for an activity, enter the following code into the terminal:
+
+```sh
+$ http POST https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <token>' score=<number>
 ```
 
-you will get a retrun with some data. it should look like this below.
-
-```javascript
+If all parameters are valid, the server returns a `201` status code, and a JSON object in an array, containing the `user _id`. If the `score` entered is among the highest three scores entered, the `user _id` and `score` will be included on the `leaderBoard`:
+```js
 [
    {
        "__v": 1,
-       "_id": "5a84b141fc36b3001492df29",
+       "_id": <activity _id>,
        "display": "true",
        "leaderBoard": [
            {
-               "id": "5a84b127fc36b3001492df28",
-               "score": "50"
+               "id": <user _id>,
+               "score": <score>
            }
        ],
-       "location": "portland",
-       "name": "10k",
+       "location": <location>,
+       "name": <name>,
        "users": [
-           "5a84b127fc36b3001492df28"
+           <user _id>
        ]
    }
 ]
 ```
-### **look up all Activities**
+### **Look Up All Displayed Activities**
 
-if you want to look up all activities to see which ones you want to join, just simple enter the code below into your terminal.
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/activity/ 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
+To see all displayed activities, enter the following terminal command:
+```sh
+$ http GET https://competeme-deploy.herokuapp.com/api/v1/activity/ 'Authorization:Bearer <token>'
 ```
-this should return an array of activities for you to pick from. example below.
 
-```javascript
+If successful, the server responds with a `200` status code and an array of all `activity _id`s whose activity has `display` set to `true`:
+```js
 [
-   "5a84b141fc36b3001492df29"
+   <activity _id>
 ]
 ```
 
-### **look up ONE Activity**
+### **Look Up ONE Activity**
 
-if you want to look up just one activity. you need to know the ID of the activity(which you can get from the find all from above). you will just add that onto the same code for the get ALL activities. code example below.
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b527fc36b3001492df2c 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
+To look up a specific activity, enter the following command, providing an `activity _id`:
+```sh
+$ http GET https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <token>'
 ```
-this should return an a single acitivty with all the info about that activity like location, name, leaderboard, and users
 
-```javascript
+If the query is valid, and the activity's `display` is set `true`, the server will return with a `200` status and a JSON object in an array:
+```js
 [
    {
        "__v": 0,
-       "_id": "5a84b141fc36b3001492df29",
+       "_id": <activity _id>,
        "display": "true",
        "leaderBoard": [],
-       "location": "portland",
-       "name": "10k",
+       "location": <location>,
+       "name": <name>,
        "users": []
    }
 ]
 ```
 
-### **look up all users**
+### **Look Up All Users**
 
-if you want to look up all users, just simple enter the code below into your terminal.
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/users 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
+To look up all users, enter the following code into the terminal:
+```sh
+$ http GET https://competeme-deploy.herokuapp.com/api/v1/users 'Authorization:Bearer <token>'
 ```
-this should return an array of users. example below.
 
-```javascript
+If the token is valid, the server will return a `200` status and an array of `user _id`s, (example):
+
+```js
 [
    "5a84b127fc36b3001492df28",
    "5a84b2a2fc36b3001492df2b"
 ]
 ```
 
-### **look up ONE user**
+### **Look Up ONE User**
 
-if you want to look up just one user. you need to know the ID of the user(which you can get from the find all from above). you will just add that onto the same code for the get ALL users. code example below.
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/users/5a84b2a2fc36b3001492df2b 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNiOWU4Nzc4NzAxY2UwMDU0ZTI5NjRiMTc1MDEzOTAyZjE1ZjNmZWJjZDgzMmQ0YjE1NGEzYTg3MjBlYjE4MTUiLCJpYXQiOjE1MTg2NDYxMTF9.knGRwcyTvBFTCIRqWuaBEd_hfDfN8vRWpZwmGrpIzEk'
+To look up one user, enter the following command, including the user's `user _id` in the url:
+```sh
+$ http GET https://competeme-deploy.herokuapp.com/api/v1/users/<user _id> 'Authorization:Bearer <token>'
 ```
-this should return an a single user with all the info about that user like name, activities. if they have any activities, there activity id and score will be in the activites block. example below.
 
+If the query is valid, and the activity's `display` is set `true`, the server will return with a `200` status and a user as a JSON object, displaying only their `username` and an `activities` array, containing `activity _id`s and `score`s for each activity:
 ```javascript
 {
    "activities": [{
-          "id": "5a84b141fc36b3001492df29",
-          "score": "50"
+          "id": <activity _id>,
+          "score": <score>
       }],
-   "name": "Tim"
+   "name": <username>
 }
 ```
 
-###  **Looking up a leaderBoard**
+###  **Looking Up a Leaderboard**
 
-if you wish to look up the leaderboard for a given activity, type in the code below.
-
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b141fc36b3001492df29/leaderboard 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM'
+To look up an activity's leaderboard, enter the following command:
+```sh
+$ http GET https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id>/leaderboard 'Authorization:Bearer <token>'
 ```
 
-you will be given the top 3 in that said activity. it should look like this.
-
+If the query is valid, the server will respond with a `200` status code, and an array of the top three scores for the activity requested, (example):
 ```javascript
 [
    {
@@ -239,21 +253,21 @@ you will be given the top 3 in that said activity. it should look like this.
 ]
 ```
 
-## **ADMIN POWER**
+## **Admin Access**
 
 The admin is a special user with an `admin` property set to `true`. Currently, only one user, whose name upon creation matches a secret name in the environment variables, can be admin.
+The admin is the only one authorized to make certain changes. An admin must approve an activity before it is posted. An admin also has a right to delete or update an existing activity. 
 
 ### **Admin: View Hidden Activities**
 
 When a user creates an acitivity, it is hidden by default. An admin must approve each hidden activity.
 
-To GET all hidden activities (admin required):
-
+To do so, enter the following command with an `admin token`:
 ```sh
 http GET https://competeme-deploy.herokuapp.com/api/v1/admin 'Authorization:Bearer <admin token>'
 ```
 
-A GET call (as admin) returns an array of activities pending approval (or an empty array if there are no activities to approve).
+A GET call (as admin) returns a `200` status code, and an array of activities pending approval (or an empty array if there are no activities to approve).
 (example):
 
 ```javascript
@@ -265,23 +279,23 @@ A GET call (as admin) returns an array of activities pending approval (or an emp
 
 ### **Admin: Update Activity**
 
-To PUT (update) an activity (admin required):
+To PUT (update) an activity, enter the following command with an `admin token`:
 
 ```sh
 http PUT https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>' [name=<string>] [location=<string>] [display=<true or false>]
 ```
 
-A PUT call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
+A PUT call (as admin) returns "No Content" with a `204` status code indicating it was succesful.
 
 ### **Admin: Delete Activity**
 
-To DELETE an activity (admin required):
+To DELETE an activity, enter the following command with an `admin token`:
 
 ```shell
 http DELETE https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>'
 ```
 
-A DELETE call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
+A DELETE call (as admin) returns "No Content" with a `204` status code indicating it was succesful.
 
 
 ## Testing
@@ -315,9 +329,7 @@ Time:        6.713s, estimated 7s
 
 ### Data Structures
 
-## **user**
-
-the user model is stuctured like this:
+## **User Schema**
 
 ```html
 user
@@ -341,9 +353,7 @@ user
     +--(...)
 ```
 
-## **activity**
-
-the activity model is stuctured like this:
+## **Activity Schema**
 
 ```html
 activity
@@ -374,9 +384,9 @@ activity
     +--(...)
 ```
 
-## **MANY to MANY**
+## **MANY to MANY Relationship**
 
-this is a many to many data structure. the schemas in the api are related like so:
+This app uses a many-to-many related database, where each user may refer to many activities, and each activity may refer to many users:
 
 ```
 user:                                   activity:

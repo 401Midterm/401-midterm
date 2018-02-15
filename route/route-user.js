@@ -22,11 +22,11 @@ module.exports = function(router) {
       .then(userresponse => userresponse.generateToken())
       .then(token => {
         debug(`\tsuccessful signup`);
-        response.status(201).json(token)
+        response.status(201).json(token);
       })
       .catch(err => {
         debug(`\tfailed signup`);
-        return errorHandler(err, response)
+        return errorHandler(err, response);
       });
   });
 
@@ -74,7 +74,7 @@ module.exports = function(router) {
     User.find()
       .then(users => {
         let userIds = users.map(user => user.id);
-        debug(`\tfound all users: ${userIds}`)
+        debug(`\tfound all users: ${userIds}`);
         response.status(200).json(userIds);
       })
       .catch(err => {
@@ -84,7 +84,7 @@ module.exports = function(router) {
   });
 
   router.put('/users/:id', bearerAuth, bodyParser, (request, response) => {
-    debug(`PUT /users/${request.params.id}`)
+    debug(`PUT /users/${request.params.id}`);
     return User.findById(request.params.id)
       .then(user => {
         if(user._id.toString() === request.user._id.toString()) {

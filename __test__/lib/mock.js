@@ -8,6 +8,7 @@ const mock = module.exports = {};
 
 mock.user = {};
 mock.activity = {};
+mock.activityLocation = {};
 mock.activityHidden = {};
 mock.admin = {};
 
@@ -98,3 +99,24 @@ mock.admin.createOne = () => {
       return resultUser;
     });
 };
+
+mock.activityLocation.createOne = () => {
+  let resultMock = null;
+
+  return mock.user.createOne()
+    .then(createdUserMock => resultMock = createdUserMock)
+    .then(() => {
+      // console.log('############', resultMock);
+      return new Activity({
+        name: faker.name.firstName(),
+        location: 'seattle',
+        display: 'true',
+        leaderBoard: [{_id: resultMock.user._id, score: faker.random.number()}],
+      }).save();
+    })
+    .then(activity => {
+      resultMock.activity = activity;
+      return resultMock;
+    });
+};
+mock.activityLocation.removeAll = () => Promise.all([Activity.remove()]);
