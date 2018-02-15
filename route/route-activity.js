@@ -1,4 +1,3 @@
-
 'use strict';
 
 const Activity = require('../model/activity');
@@ -22,12 +21,34 @@ module.exports = router => {
             if (request.body.score === undefined) {
               throw new Error('validation');
             }
-            activity.users.push(request.user._id);
+
+            if (!activity.users.toString().includes(request.user._id.toString('hex'))) {
+              activity.users.push(request.user._id);
+            } 
+
             const leaderBoardItem = {
               id: request.user._id,
               score: request.body.score,
             };
-            activity.leaderBoard.push(leaderBoardItem);
+
+            for(let i = 0; i < activity.leaderBoard.length; i++) {
+              if(activity.leaderBoard[i].id.toString() === request.user._id.toString('hex')) {
+                if(parseInt(request.body.score) > parseInt(activity.leaderBoard[i].score.toString())) {
+                  activity.leaderBoard[i].score = request.body.score;
+                }
+              }
+            }
+
+            if(activity.leaderBoard.length === 0) {
+              activity.leaderBoard.push(leaderBoardItem);
+            }
+
+            for(let i = 0; i < activity.leaderBoard.length; i++) {
+              if (activity.leaderBoard[i].id.toString() !== leaderBoardItem.id.toString()) {
+                activity.leaderBoard.push(leaderBoardItem);
+              } 
+            }
+
             activity.leaderBoard.sort(function(a, b){
               return b.score - a.score;
             });
@@ -98,10 +119,10 @@ module.exports = router => {
           let activitesIds = activites.map(activity => activity.id);
           debug(`\tfound all visible activities: ${activitesIds}`);
           response.status(200).json(activitesIds)
-            .catch(err => {
-              debug(`\tfailed to find all`);
-              return errorHandler(err,response);
-            });
+        })
+        .catch(err => {
+          debug(`\tfailed to find all`);
+          return errorHandler(err,response);
         });
     })
 
