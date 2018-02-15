@@ -430,6 +430,7 @@ user:                                   activity:
 
 ### [Koko Kassa](https://github.com/kowserk7)
 [![][koko]](https://github.com/kowserk7)
+
 JavaScript developer with strengths in problem solving by using my root-cause solutions. Advocate for diverse
 perspectives to drive innovation. Fluent in both Arabic and Tigrinya.
 [github.com/kowserk7](https://github.com/kowserk7)
