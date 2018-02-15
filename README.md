@@ -4,7 +4,7 @@
 
 ##  **About this App.**
 
-This app is a basic leader board for different acticities. We let you build a user account that you can add different types of activities to your account and when you do that, you add your personal best score to that event. We keep track of the top 3 best scores for anyone to see.
+This app is a basic leader board for different activities. We let you build a user account that you can add different types of activities to your account and when you do that, you add your personal best score to that event. We keep track of the top 3 best scores for anyone to see.
 
 ### **Installing and How to use.**
 
