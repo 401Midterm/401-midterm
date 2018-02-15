@@ -247,29 +247,19 @@ You will be given the top 3 in that said activity. it should look like this. If 
 
 ## **Admin Access**
 
-We have given this application admin access to allow only a designated users to make certain changes. An admin must approve an activity before it is posted. An admin also has a right to delete or update an existing activity. 
+The admin is a special user with an `admin` property set to `true`. Currently, only one user, whose name upon creation matches a secret name in the environment variables, can be admin.
+The admin is the only one authorized to make certain changes. An admin must approve an activity before it is posted. An admin also has a right to delete or update an existing activity. 
 
+### **Admin: View Hidden Activities**
 
-### **Update an activity/approving activity**
+When a user creates an acitivity, it is hidden by default. An admin must approve each hidden activity.
 
-If you want to update an activity's name or location you can make a PUT request to that given activies id.
-
-below is the code that you will use to update an activity with updated info OR approve it once you think its ready for public use. in the example below, we are setting the display to true.
-
-```javascript
-http PUT https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b141fc36b3001492df29 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM' display=true
-```
-this command will return no content.
-
-## **Admin queue look up**
-
-when a use creates an acitivity, it is set to be hidden be default. it take a Admin to then go in and approve it. They will do that will a update call that is talked about above. to get your Admin Queue, they will type in the following code.
-
-```javascript
-http GET https://competeme-deploy.herokuapp.com/api/v1/admin 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM'
+```sh
+http GET https://competeme-deploy.herokuapp.com/api/v1/admin 'Authorization:Bearer <admin token>'
 ```
 
-this will return an array of ativities for them to approve or an empty array if there is nothing to approve. example code below.
+A GET call (as admin) returns an array of activities pending approval (or an empty array if there are no activities to approve).
+(example):
 
 ```javascript
 [
@@ -278,20 +268,30 @@ this will return an array of ativities for them to approve or an empty array if 
 ]
 ```
 
-## **Admin Delete for activity**
+### **Admin: Update Activity**
 
-if you wish to delete an activity, you can do so with the admin power with this command below.
+To PUT (update) an activity (admin required):
 
-```javascript
-http DELETE https://competeme-deploy.herokuapp.com/api/v1/activity/5a84b527fc36b3001492df2c 'Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjBhNTE0MjY4OTcwZDM3ZjdjYWI5NTBjYjRiYzFiY2FiMjEzMTQyODk1MDkwYWE0MjQ2ZmRhMTU4ZDE1NzdjNTUiLCJpYXQiOjE1MTg2NDcyNjN9.34O6ZXEVEEy1wttaaBsgR-mUiOhFcEb9wyMH_X9UPVM'
+```sh
+http PUT https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>' [name=<string>] [location=<string>] [display=<true or false>]
 ```
 
-this will return no content but you will get a 204 status code to let you know it was succesful.
+A PUT call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
+
+### **Admin: Delete Activity**
+
+To DELETE an activity (admin required):
+
+```shell
+http DELETE https://competeme-deploy.herokuapp.com/api/v1/activity/<activity _id> 'Authorization:Bearer <admin token>'
+```
+
+A DELETE call (as admin) returns "No Content" with a 204 status code indicating it was succesful.
 
 
-### Testing
+## Testing
 
-We have completed testing for all functions and branches with the following coverage.
+Tests pass with >80% coverage of statements, branches, function and lines. Most uncovered lines are promise `catch()` functions, that will onnly be triggered if an error occurs in an outside API, (such as MongoDB).
 
 ```javascript
 --------------------|----------|----------|----------|----------|----------------|
