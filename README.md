@@ -424,3 +424,22 @@ user:                                   activity:
                                           |                |
                                           +----------------+
 ```
+
+
+## **About Us**
+![koko][koko]
+
+
+![bill][bill]
+
+
+![ender][ender]
+
+
+![heath][heath]
+
+
+[koko]: https://github.com/401Midterm/CompeteMe/tree/dev/about/koko.jpeg
+[bill]: https://github.com/401Midterm/CompeteMe/tree/dev/about/bill.jpeg
+[ender]: https://github.com/401Midterm/CompeteMe/tree/dev/about/ender.jpeg
+[heath]: https://github.com/401Midterm/CompeteMe/tree/dev/about/heath.jpeg
