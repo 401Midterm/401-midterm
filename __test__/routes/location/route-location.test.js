@@ -31,7 +31,6 @@ describe('GET', function() {
         expect(testRes.status).toEqual(200);
       });
       it('should be an array of IDs', () => {
-        console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', testRes);
         expect(Array.isArray(testRes.body)).toBe(true);
       });
       it('should be match the id of the non approved activity', () => {
