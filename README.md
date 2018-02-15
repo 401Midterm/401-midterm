@@ -437,18 +437,21 @@ perspectives to drive innovation. Fluent in both Arabic and Tigrinya.
 
 ### [Bill Odell](https://github.com/bpodell)
 [![][bill]](https://github.com/bpodell) 
+
 Acquiring my certificate as a Full Stack Javascript Developer. Trained with current industry practices including Node, HTML5, React and MongoDB. Experience working on multiple group projects based on GitHub, ultimately deploying live applications on Heroku.
 [github.com/bpodell](https://github.com/bpodell)
 [linkedin.com/in/bpodell]
 
 ### [Ender Smith](https://github.com/EnderSmith)
 [![][ender]](https://github.com/EnderSmith)
+
 Full-Stack JavaScript developer with background in music composition. Passionate about creating products that bring solutionts to real world problems and make life easier.
 [github.com/EnderSmith](https://github.com/EnderSmith)
 [linkedin.com/in/ender-smith/](https://www.linkedin.com/in/ender-smith/)
 
 ### [Heath Smith](https://github.com/Iamheathsmith)
 [![][heath]](https://github.com/Iamheathsmith)
+
 Full Stack Software developer with More than 12 years of DoD experience in aviation administration and transportation operations.
 [github.com/Iamheathsmith](https://github.com/Iamheathsmith)
 [linkedin.com/in/heath-smith/](https://www.linkedin.com/in/heath-smith/)
