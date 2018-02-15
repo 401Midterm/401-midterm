@@ -427,19 +427,34 @@ user:                                   activity:
 
 
 ## **About Us**
-![koko][koko]
+
+### [Koko Kassa](https://github.com/kowserk7)
+[![][koko]](https://github.com/kowserk7)
+JavaScript developer with strengths in problem solving by using my root-cause solutions. Advocate for diverse
+perspectives to drive innovation. Fluent in both Arabic and Tigrinya.
+[github.com/kowserk7](https://github.com/kowserk7)
+[linkedin.com/in/kowser-kassa/](https://www.linkedin.com/in/kowser-kassa/)
+
+### [Bill Odell](https://github.com/bpodell)
+[![][bill]](https://github.com/bpodell) 
+Acquiring my certificate as a Full Stack Javascript Developer. Trained with current industry practices including Node, HTML5, React and MongoDB. Experience working on multiple group projects based on GitHub, ultimately deploying live applications on Heroku.
+[github.com/bpodell](https://github.com/bpodell)
+[linkedin.com/in/bpodell]
+
+### [Ender Smith](https://github.com/EnderSmith)
+[![][ender]](https://github.com/EnderSmith)
+Full-Stack JavaScript developer with background in music composition. Passionate about creating products that bring solutionts to real world problems and make life easier.
+[github.com/EnderSmith](https://github.com/EnderSmith)
+[linkedin.com/in/ender-smith/](https://www.linkedin.com/in/ender-smith/)
+
+### [Heath Smith](https://github.com/Iamheathsmith)
+[![][heath]](https://github.com/Iamheathsmith)
+Full Stack Software developer with More than 12 years of DoD experience in aviation administration and transportation operations.
+[github.com/Iamheathsmith](https://github.com/Iamheathsmith)
+[linkedin.com/in/heath-smith/](https://www.linkedin.com/in/heath-smith/)
 
 
-![bill][bill]
-
-
-![ender][ender]
-
-
-![heath][heath]
-
-
-[koko]: https://github.com/401Midterm/CompeteMe/tree/dev/about/koko.jpeg
-[bill]: https://github.com/401Midterm/CompeteMe/tree/dev/about/bill.jpeg
-[ender]: https://github.com/401Midterm/CompeteMe/tree/dev/about/ender.jpeg
-[heath]: https://github.com/401Midterm/CompeteMe/tree/dev/about/heath.jpeg
+[koko]: https://github.com/401Midterm/CompeteMe/blob/dev/about/koko.jpg?raw=true
+[bill]: https://github.com/401Midterm/CompeteMe/blob/dev/about/bill.jpg?raw=true
+[ender]: https://github.com/401Midterm/CompeteMe/blob/dev/about/ender.jpg?raw=true
+[heath]: https://github.com/401Midterm/CompeteMe/blob/dev/about/heath.jpg?raw=true
