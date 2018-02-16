@@ -1,8 +1,10 @@
-# 401-midterm com
+# 401-midterm: CompeteMe
 
 [![Build Status](https://travis-ci.org/401Midterm/CompeteMe.svg?branch=master)](https://travis-ci.org/401Midterm/CompeteMe)
 
-##  **About This App**
+#  **CompeteMe**
+
+[Open API](http://competeme-deploy.herokuapp.com/)
 
 This application is designed to allow users to form their own communities based on where they live. A user can sign up for a new account and post an activity that they would like their community to engage in, which then allows other users to view and interact with it. The activities are given a leaderboard for each location, so the community can see the fastest/highest scores for this event in their area.
 
@@ -302,34 +304,13 @@ A DELETE call (as admin) returns "No Content" with a `204` status code indicatin
 
 Tests pass with >80% coverage of statements, branches, function and lines. Most uncovered lines are promise `catch()` functions, that will onnly be triggered if an error occurs in an outside API, (such as MongoDB).
 
-```javascript
---------------------|----------|----------|----------|----------|----------------|
-File                |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
---------------------|----------|----------|----------|----------|----------------|
-All files           |    92.74 |    82.54 |    90.36 |    95.93 |                |
- lib                |    91.67 |    82.76 |    85.71 |    98.72 |                |
-  admin-auth.js     |      100 |      100 |      100 |      100 |                |
-  basic-auth.js     |      100 |      100 |      100 |      100 |                |
-  bearer-auth.js    |    80.95 |     62.5 |       75 |    94.44 |             24 |
-  error-handler.js  |      100 |      100 |      100 |      100 |                |
-  server.js         |    90.91 |       50 |    85.71 |      100 |          23,35 |
- model              |    84.85 |    66.67 |    76.92 |       90 |                |
-  activity.js       |      100 |      100 |      100 |      100 |                |
-  user.js           |    83.33 |    66.67 |    76.92 |    88.89 |       23,40,46 |
- route              |    95.73 |    85.71 |    94.64 |    95.58 |                |
-  route-activity.js |    98.21 |    81.25 |      100 |    98.18 |             32 |
-  route-admin.js    |    90.91 |      100 |       80 |       90 |             17 |
-  route-user.js     |       94 |    91.67 |     91.3 |    93.75 |       62,73,77 |
---------------------|----------|----------|----------|----------|----------------|
-Test Suites: 9 passed, 9 total
-Tests:       62 passed, 62 total
-Snapshots:   0 total
-Time:        6.713s, estimated 7s
-```
+## Data Flow
 
-### Data Structures
+![](https://github.com/401Midterm/CompeteMe/blob/dev/about/dataflow.jpg?raw=true)
 
-## **User Schema**
+## Data Structures
+
+### **User Schema**
 
 ```html
 user
@@ -353,7 +334,7 @@ user
     +--(...)
 ```
 
-## **Activity Schema**
+### **Activity Schema**
 
 ```html
 activity
@@ -384,47 +365,11 @@ activity
     +--(...)
 ```
 
-## **MANY to MANY Relationship**
+### **MANY to MANY Relationship**
 
 This app uses a many-to-many related database, where each user may refer to many activities, and each activity may refer to many users:
 
-```
-user:                                   activity:
-+--------------+______<ref__       ref>   +----------------+
-|         ._id  __________  |    \\\\\\\\\  ._id           |
-|    .password |          | |    \\       | .name          |
-|    .username |          | |    \\       | .location      |
-|       .admin |          | |    \\       | .leaderBoard:  |
-| .activities: |          | |    \\      +-------------+   |
-| +-------------+         | |    \\      | 0:          |   |
-| |             |         | |____\\_____+--------+     |   |
-| |          0: |         |  ____\\_____  .id    |     |   |
-| |      +--------+       | |    \\     | .score |     |   |
-| |      |    .id  \\\\\\\\\\\\\\\\     +--------+     |   |
-| |      | .score |       | |            | 1:          |   |
-| |      +--------+       | |           +--------+     |   |
-| |          1: |         | |           | .id    |     |   |
-| |      +--------+       | |           | .score |     |   |
-| |      |    .id |       | |           +--------+     |   |
-| |      | .score |       | |            | 2:          |   |
-| |      +--------+       | |           +--------+     |   |
-| |             |         | |           | .id    |     |   |
-| +-------------+         | |           | .score |     |   |
-|              |          | |           +--------+     |   |
-+--------------+          | |            |             |   |
-                          | |            +-------------+   |
-                          | |             | .users:        |
-                          | |            +-------------+   |
-                          | |_____<ref___| 0: id       |   |
-                          |______________  1: id       |   |
-                                         | 2: id       |   |
-                                         | 3: id       |   |
-                                         | 4: id       |   |
-                                         +-------------+   |
-                                          |                |
-                                          +----------------+
-```
-
+![](https://github.com/401Midterm/CompeteMe/blob/dev/about/datastructure.png?raw=true)
 
 ## **About Us**
 
